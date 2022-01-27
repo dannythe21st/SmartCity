@@ -1,3 +1,5 @@
+import SmartCity.SmartCity;
+
 import java.util.Scanner;
 
 /**
@@ -12,6 +14,9 @@ public class Main {
     private static final String EXIT = "exit";
     private static final String HELP = "help";
     private static final String ADD_USER = "add_user";
+
+
+    //Outputs
     private static final String BYE = "Goodbye";
 
 
@@ -36,7 +41,13 @@ public class Main {
     }
 
     private static void helpCommandList() {
-
+        System.out.println(EXIT);
+        System.out.println(HELP);
+        System.out.println(ADD_USER);
+        System.out.println(ADD_USER);
+        System.out.println(ADD_USER);
+        System.out.println(ADD_USER);
+        System.out.println(ADD_USER);
     }
 
     private static void addUser() {

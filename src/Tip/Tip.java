@@ -1,3 +1,7 @@
+package Tip;
+
+import User.User;
+
 public class Tip {
 
     private User author;
