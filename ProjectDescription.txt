@@ -1,0 +1,7 @@
+Urban areas and metropolitan regions witness an enormous flood of individuals coming from each corner looking for occupations, studies, and even in search of a superior way of life. In the underlying days after the move, individuals don’t have the foggiest idea about the primary offices, attractions, and administrations offered in the city.
+
+Smart City project permits travelers and different guests to the city by giving data about inns, transportation offices, air ticket booking, shopping subtleties, city news and so on. Consequently, it fills in as a guide of the city-to-city guests.
+
+It is an online programming created in Java Programming language that tackles the vast majority of the issues that any new guest faces when going to another city like path finding, inn looking, ticket booking and the sky is the limit from there.
+
+Clients can interface with the application by means of the web and peruse all the brilliant city site pages to get the subtleties they need. Clients can see the whole guide of a city alongside the significant tourist spots. This will make their trip across the city substantially more enjoyable. 
