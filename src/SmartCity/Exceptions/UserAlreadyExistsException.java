@@ -2,9 +2,9 @@ package SmartCity.Exceptions;
 
 public class UserAlreadyExistsException extends RuntimeException{
 
-    private String MESSAGE = "User already exists.";
+    private static final String MESSAGE = "User already exists.";
 
     public UserAlreadyExistsException() {
-        super();
+        super(MESSAGE);
     }
 }
