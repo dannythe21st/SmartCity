@@ -12,11 +12,11 @@ public class User implements UserIF{
     private int age;
     private int numOfTips;
     private int level;
-    private String type; //Admin || Regular
+    private int type; //Admin (1) || Regular (2)
     private Map<String, Tip> tips;
 
 
-    public User(String id, String name, int age, String type){
+    public User(String id, String name, int age, int type){
         this.id = id;
         this.name = name;
         this.age = age;
@@ -38,7 +38,7 @@ public class User implements UserIF{
     @Override
     public int getLevel() { return level; }
     @Override
-    public String getType() { return type; }
+    public int getType() { return type; }
 
     public void levelUp(){
         level = level++;

@@ -14,5 +14,5 @@ public interface UserIF {
 
     String getID();
 
-    String getType();
+    int getType();
 }

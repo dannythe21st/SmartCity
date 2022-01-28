@@ -11,8 +11,8 @@ public class SmartCity {
 
     //Constants
     private static final int MINIMUM_AGE = 13;
-    private static final String ADMIN = "admin";
-    private static final String REGULAR = "regular";
+    private static final int ADMIN = 1;
+    private static final int REGULAR = 2;
 
     private Map<String, User> users; //id, User
     private Map<String, Tip> tipsByID; //id, tip
@@ -35,7 +35,7 @@ public class SmartCity {
             throw new UserAlreadyExistsException();
         else if (u.getAge() < MINIMUM_AGE)
             throw new InvalidAgeException();
-        else if(u.getType().equals(ADMIN) && u.getType().equals(REGULAR))
+        else if(u.getType() != ADMIN && u.getType() != REGULAR)
             throw new InvalidTypeException();
         else
             users.put(u.getID(), u);
@@ -48,7 +48,7 @@ public class SmartCity {
      */
     public void removeUser(String removerID, String removedID) throws NotAdminException, UserDoesntExistException{
         User remover = users.get(removerID);
-        if (!remover.getType().equals(ADMIN))
+        if (remover.getType() != (ADMIN))
             throw new NotAdminException(remover);
         else if (!users.containsKey(removedID) || !users.containsKey(removerID))
             throw new UserDoesntExistException();

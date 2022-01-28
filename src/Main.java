@@ -1,6 +1,4 @@
-import SmartCity.Exceptions.NotAdminException;
-import SmartCity.Exceptions.UserAlreadyExistsException;
-import SmartCity.Exceptions.UserDoesntExistException;
+import SmartCity.Exceptions.*;
 import SmartCity.SmartCity;
 import User.User;
 
@@ -16,12 +14,13 @@ import java.util.Scanner;
 public class Main {
 
     //Comms
+    private static final String PROMPT = "> ";
     private static final String EXIT = "exit";
     private static final String HELP = "help";
     private static final String ADD_USER = "adduser";
     private static final String REMOVE_USER = "removeuser";
     private static final String ADD_TIP = "addtip";
-
+    private static final String REMOVE_TIP = "removetip";
 
 
     //Outputs
@@ -35,6 +34,7 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
         SmartCity s = new SmartCity();
+        System.out.print(PROMPT);
         String comm = in.nextLine().toLowerCase();
         while (!comm.equals(EXIT)) {
             switch (comm) {
@@ -54,9 +54,11 @@ public class Main {
                     System.out.println(UNKNOWN_COMMAND);
             }
             System.out.println();
+            System.out.print(PROMPT);
             comm = in.nextLine().toLowerCase();
         }
-        System.out.println(BYE);
+        System.out.println();
+        System.out.print(BYE);
         in.close();
     }
 
@@ -66,8 +68,8 @@ public class Main {
         System.out.println(ADD_USER);
         System.out.println(REMOVE_USER);
         System.out.println(ADD_TIP);
-        System.out.println(ADD_USER);
-        System.out.println(ADD_USER);
+        System.out.println(REMOVE_TIP);
+        //System.out.println(ADD_USER);
     }
 
     private static void addUser(SmartCity s, Scanner in) {
@@ -80,16 +82,16 @@ public class Main {
         System.out.print("Age: ");
         int age = in.nextInt();
 
-        System.out.print("Type (Admin|Regular): ");
-        String type = in.next().toLowerCase();
+        System.out.print("Type (Admin (1) | Regular (2)): ");
+        int type = in.nextInt(); in.nextLine();
 
         try{
             User u = new User(id, name, age, type);
             s.addUser(u);
             System.out.println(USER_REGISTRATION);
-        }catch(UserAlreadyExistsException e){
+        }catch(UserAlreadyExistsException | InvalidAgeException | InvalidTypeException e){
             System.out.println(e.getMessage());
-        }catch(InputMismatchException e){
+        } catch(InputMismatchException e){
             System.out.println("Incorrect information.");
         }
     }
@@ -106,7 +108,6 @@ public class Main {
         }catch(NotAdminException | UserDoesntExistException e){
             System.out.println(e.getMessage());
         }
-
     }
 
     private static void addTip(SmartCity s, Scanner in){
