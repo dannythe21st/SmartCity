@@ -2,7 +2,7 @@ package Tip;
 
 import User.User;
 
-public class Tip {
+public class Tip implements TipIF{
 
     private User author;
     private String id;

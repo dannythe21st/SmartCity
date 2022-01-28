@@ -13,4 +13,6 @@ public interface UserIF {
     void levelUp();
 
     String getID();
+
+    String getType();
 }
