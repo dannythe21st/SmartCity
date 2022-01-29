@@ -1,5 +1,6 @@
 package SmartCity;
 
+import Establishment.Establishment;
 import Tip.Tip;
 import User.User;
 import SmartCity.Exceptions.*;
@@ -16,10 +17,12 @@ public class SmartCity {
 
     private Map<String, User> users; //id, User
     private Map<String, Tip> tipsByID; //id, tip
+    private Map<String, Establishment> shops; //name, Shop
 
     public SmartCity() {
         this.users = new HashMap<>();
         this.tipsByID = new HashMap<>();
+        this.shops = new HashMap<>();
     }
 
     /**
@@ -56,6 +59,11 @@ public class SmartCity {
             users.remove(removedID);
     }
 
+    /**
+     * Add a new tip to a local in the city
+     * @param tip
+     * @throws UserDoesntExistException
+     */
     public void addTip(Tip tip) throws UserDoesntExistException {
         if (!users.containsKey(tip.getAuthorID()))
             throw new UserDoesntExistException();
@@ -63,9 +71,19 @@ public class SmartCity {
             tipsByID.put(tip.getId(), tip);
     }
 
+    /**
+     * Remove tip
+     * @param userID
+     * @param tipID
+     * @throws UserDoesntExistException
+     * @throws TipDoesntExistException
+     */
     public void removeTip(String userID, String tipID) throws UserDoesntExistException, TipDoesntExistException{
+        User u = users.get(userID);
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
+        else if (users.get(userID).getType() != ADMIN)
+            throw new NotAdminException(u);
         else if (!tipsByID.containsKey(tipID))
             throw new TipDoesntExistException();
         else

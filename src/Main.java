@@ -22,6 +22,9 @@ public class Main {
     private static final String REMOVE_USER = "removeuser";
     private static final String ADD_TIP = "addtip";
     private static final String REMOVE_TIP = "removetip";
+    private static final String GET_TIPS_BY_USER = "tipbyuser";
+    private static final String GET_TIPS_BY_STREET = "tipbystreet";
+    private static final String GET_TIPS_BY_SHOP = "tipbyshop";
 
 
     //Outputs
@@ -55,6 +58,15 @@ public class Main {
                 case REMOVE_TIP:
                     removeTip(s, in);
                     break;
+                case GET_TIPS_BY_USER:
+                    getTipsByUser(s, in);
+                    break;
+                case GET_TIPS_BY_STREET:
+                    getTipsByStreet(s, in);
+                    break;
+                case GET_TIPS_BY_SHOP:
+                    getTipsByShop(s, in);
+                    break;
                 default:
                     System.out.println(UNKNOWN_COMMAND);
             }
@@ -74,7 +86,9 @@ public class Main {
         System.out.println(REMOVE_USER);
         System.out.println(ADD_TIP);
         System.out.println(REMOVE_TIP);
-        //System.out.println(ADD_USER);
+        System.out.println(GET_TIPS_BY_USER);
+        System.out.println(GET_TIPS_BY_STREET);
+        System.out.println(GET_TIPS_BY_SHOP);
     }
 
     private static void addUser(SmartCity s, Scanner in) {
@@ -139,17 +153,30 @@ public class Main {
     }
 
     private static void removeTip(SmartCity s, Scanner in){
-        System.out.println("User ID: ");
+        System.out.print("User ID: ");
         String userID = in.next(); in.nextLine();
 
-        System.out.println("Tip ID: ");
+        System.out.print("Tip ID: ");
         String tipID = in.next(); in.nextLine();
 
         try{
             s.removeTip(userID, tipID);
             System.out.println(TIP_REMOVED);
+        }catch (UserDoesntExistException | TipDoesntExistException e){
+            System.out.println(e.getMessage());
         }
     }
 
+    private static void getTipsByUser(SmartCity s, Scanner in){
+
+    }
+
+    private static void getTipsByStreet(SmartCity s, Scanner in){
+
+    }
+
+    private static void getTipsByShop(SmartCity s, Scanner in){
+
+    }
 
 }

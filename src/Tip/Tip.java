@@ -1,18 +1,18 @@
 package Tip;
 
-import User.User;
+import Establishment.Establishment;
 
 public class Tip implements TipIF{
 
     private String authorID;
     private String id;
-    private String address;
+    private Establishment shop;
     private String description;
 
-    public Tip(String authorID, String id, String address, String description) {
+    public Tip(String authorID, String id, Establishment shop, String description) {
         this.authorID = authorID;
         this.id = id;
-        this.address = address;
+        this.shop = shop;
         this.description = description;
     }
 
@@ -20,7 +20,7 @@ public class Tip implements TipIF{
 
     public String getId() { return id; }
 
-    public String getAddress() { return address; }
+    public String getShop() { return shop; }
 
     public String getDescription() { return description; }
 }

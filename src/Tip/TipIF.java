@@ -7,7 +7,7 @@ public interface TipIF {
 
     String getId();
 
-    String getAddress();
+    String getShop();
 
     String getDescription();
 
