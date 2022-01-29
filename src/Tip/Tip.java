@@ -4,19 +4,19 @@ import User.User;
 
 public class Tip implements TipIF{
 
-    private User author;
+    private String authorID;
     private String id;
     private String address;
     private String description;
 
-    public Tip(User author, String id, String address, String description) {
-        this.author = author;
+    public Tip(String authorID, String id, String address, String description) {
+        this.authorID = authorID;
         this.id = id;
         this.address = address;
         this.description = description;
     }
 
-    public User getAuthor() { return author; }
+    public String getAuthor() { return authorID; }
 
     public String getId() { return id; }
 

@@ -1,5 +1,6 @@
 import SmartCity.Exceptions.*;
 import SmartCity.SmartCity;
+import Tip.Tip;
 import User.User;
 
 import java.util.InputMismatchException;
@@ -111,6 +112,25 @@ public class Main {
     }
 
     private static void addTip(SmartCity s, Scanner in){
+        System.out.println("User ID: ");
+        String userID = in.next(); in.nextLine();
+
+        System.out.println("Tip ID: ");
+        String tipID = in.next(); in.nextLine();
+
+        System.out.println("Address: ");
+        String address = in.nextLine();
+
+        System.out.println("Description: ");
+        String description = in.nextLine();
+
+        try{
+            Tip tip = new Tip(userID, tipID, address, description);
+            s.addTip(tip);
+        }catch(InvalidTypeException e){
+            System.out.println("Wrong info.");
+        }
+
 
     }
 

@@ -56,5 +56,9 @@ public class SmartCity {
             users.remove(removedID);
     }
 
+    public void addTip(Tip tip){
+        tipsByID.put(tip.getId(), tip);
+    }
+
 
 }
