@@ -20,7 +20,7 @@ public class Tip implements TipIF{
 
     public String getId() { return id; }
 
-    public String getShop() { return shop; }
+    public Establishment getShop() { return shop; }
 
     public String getDescription() { return description; }
 }

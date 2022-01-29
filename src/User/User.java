@@ -3,6 +3,7 @@ package User;
 import Tip.Tip;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class User implements UserIF{
@@ -29,27 +30,37 @@ public class User implements UserIF{
     //Getters
     @Override
     public String getID() { return id; }
+
     @Override
     public String getName() { return name; }
+
     @Override
     public int getAge() { return age; }
+
     @Override
-    public int getNumOfTips() { return numOfTips; }
+    public int getNumOfTips() { return tips.size(); }
+
     @Override
     public int getLevel() { return level; }
+
     @Override
     public int getType() { return type; }
 
-    public void levelUp(){
-        level = level++;
-    }
-
+    @Override
     public void updateLevel(){
         if (numOfTips < 5)
             this.level = 0;
         else{
             this.level = Math.floorDiv(numOfTips,  5);
         }
+    }
+
+    public void addTip(Tip tip){
+        tips.put(tip.getId(), tip);
+    }
+
+    public Iterator<Tip> tipsByUser(){
+        return tips.values().iterator();
     }
 
 }

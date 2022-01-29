@@ -4,6 +4,7 @@ import Tip.Tip;
 import User.User;
 
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -136,15 +137,14 @@ public class Main {
         System.out.print("Tip ID: ");
         String tipID = in.next(); in.nextLine();
 
-        System.out.print("Address: ");
-        String address = in.nextLine();
+        System.out.print("Shop: ");
+        String shopName = in.nextLine();
 
         System.out.print("Description: ");
         String description = in.nextLine();
 
         try{
-            Tip tip = new Tip(userID, tipID, address, description);
-            s.addTip(tip);
+            s.addTip(userID, tipID, shopName, description);
         }catch(UserDoesntExistException e){
             System.out.println(e.getMessage());
         } catch(InvalidTypeException e){
@@ -168,15 +168,49 @@ public class Main {
     }
 
     private static void getTipsByUser(SmartCity s, Scanner in){
-
+        System.out.println("User ID: ");
+        String userID = in.next();
+        try{
+            Iterator<Tip> it = s.getTipsByUser(userID);
+            int tipNum = 1;
+            while(it.hasNext()){
+                System.out.print(tipNum++ +". " + it.next().getShop());
+                System.out.print("  " + it.next().getDescription());
+            }
+        }catch(UserDoesntExistException | UserHasNoTipsException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void getTipsByStreet(SmartCity s, Scanner in){
-
+        System.out.println("Street name: ");
+        String address = in.nextLine();
+        try{
+            Iterator<Tip> it = s.getTipsByStreet(address);
+            int tipNum = 1;
+            while(it.hasNext()){
+                System.out.print(tipNum++ +". " + it.next().getShop());
+                System.out.print("  " + it.next().getDescription());
+            }
+        }catch(NoTipsForThatStreetException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-    private static void getTipsByShop(SmartCity s, Scanner in){
 
+    private static void getTipsByShop(SmartCity s, Scanner in){
+        System.out.println("Shop name: ");
+        String shopName = in.nextLine();
+        try{
+            Iterator<Tip> it = s.getTipsByShop(shopName);
+            int tipNum = 1;
+            while(it.hasNext()){
+                System.out.print(tipNum++ +". " + it.next().getShop());
+                System.out.print("  " + it.next().getDescription());
+            }
+        }catch(NoTipsForThatStreetException e){
+            System.out.println(e.getMessage());
+        }
     }
 
 }

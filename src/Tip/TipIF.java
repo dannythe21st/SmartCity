@@ -1,5 +1,6 @@
 package Tip;
 
+import Establishment.Establishment;
 import User.User;
 
 public interface TipIF {
@@ -7,7 +8,7 @@ public interface TipIF {
 
     String getId();
 
-    String getShop();
+    Establishment getShop();
 
     String getDescription();
 

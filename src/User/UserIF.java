@@ -10,9 +10,9 @@ public interface UserIF {
 
     int getLevel();
 
-    void levelUp();
-
     String getID();
 
     int getType();
+
+    void updateLevel();
 }

@@ -20,6 +20,11 @@ public class Establishment implements EstablishmentIF{
     }
 
     @Override
+    public String getAddress() {
+        return address;
+    }
+
+    @Override
     public double getRating() {
         return rating;
     }
