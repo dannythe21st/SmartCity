@@ -67,12 +67,18 @@ public class SmartCity {
      * @param description
      * @throws UserDoesntExistException
      */
-    public void addTip(String userID, String tipID, String shopName, String description) throws UserDoesntExistException {
+    public void addTip(String userID, String tipID, String shopName, String address, String description)
+            throws UserDoesntExistException {
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
         else{
-            Establishment s = shops.get(shopName);
-            Tip tip = new Tip(userID, tipID, s, description);
+            Establishment s = null;
+            if (!shops.containsKey(shopName))
+                s = new Establishment(shopName, address);
+            else
+                s = shops.get(shopName);
+
+            Tip tip = new Tip(userID, tipID, s, address, description);
             tipsByID.put(tip.getId(), tip);
             users.get(userID).updateLevel();
             users.get(userID).addTip(tip);
@@ -114,8 +120,9 @@ public class SmartCity {
         List<Tip> tipsByStreet = new LinkedList<>();
         Iterator<Tip> it = tipsByID.values().iterator();
         while(it.hasNext()){
-            if (it.next().getShop().getAddress().equals(address))
-                tipsByStreet.add(it.next());
+            Tip t = it.next();
+            if (t.getShop().getAddress().equals(address))
+                tipsByStreet.add(t);
         }
         if (tipsByStreet.size() == 0) throw new NoTipsForThatStreetException();
         return tipsByStreet.iterator();
@@ -125,8 +132,9 @@ public class SmartCity {
         List<Tip> tipsByShop = new LinkedList<>();
         Iterator<Tip> it = tipsByID.values().iterator();
         while(it.hasNext()){
-            if (it.next().getShop().getName().equals(shopName))
-                tipsByShop.add(it.next());
+            Tip t = it.next();
+            if (t.getShop().getName().equals(shopName))
+                tipsByShop.add(t);
         }
         if (tipsByShop.size() == 0) throw new NoTipsForThatShopException();
         return tipsByShop.iterator();

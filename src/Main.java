@@ -140,11 +140,14 @@ public class Main {
         System.out.print("Shop: ");
         String shopName = in.nextLine();
 
+        System.out.print("Address: ");
+        String address = in.nextLine();
+
         System.out.print("Description: ");
         String description = in.nextLine();
 
         try{
-            s.addTip(userID, tipID, shopName, description);
+            s.addTip(userID, tipID, shopName, address, description);
         }catch(UserDoesntExistException e){
             System.out.println(e.getMessage());
         } catch(InvalidTypeException e){
@@ -168,14 +171,14 @@ public class Main {
     }
 
     private static void getTipsByUser(SmartCity s, Scanner in){
-        System.out.println("User ID: ");
-        String userID = in.next();
+        System.out.print("User ID: ");
+        String userID = in.next(); in.nextLine();
         try{
             Iterator<Tip> it = s.getTipsByUser(userID);
             int tipNum = 1;
             while(it.hasNext()){
-                System.out.print(tipNum++ +". " + it.next().getShop());
-                System.out.print("  " + it.next().getDescription());
+                System.out.println(tipNum++ +". " + it.next().getShop());
+                System.out.print("   " + it.next().getDescription());
             }
         }catch(UserDoesntExistException | UserHasNoTipsException e){
             System.out.println(e.getMessage());
@@ -183,7 +186,7 @@ public class Main {
     }
 
     private static void getTipsByStreet(SmartCity s, Scanner in){
-        System.out.println("Street name: ");
+        System.out.print("Street name: ");
         String address = in.nextLine();
         try{
             Iterator<Tip> it = s.getTipsByStreet(address);
@@ -199,7 +202,7 @@ public class Main {
 
 
     private static void getTipsByShop(SmartCity s, Scanner in){
-        System.out.println("Shop name: ");
+        System.out.print("Shop name: ");
         String shopName = in.nextLine();
         try{
             Iterator<Tip> it = s.getTipsByShop(shopName);
