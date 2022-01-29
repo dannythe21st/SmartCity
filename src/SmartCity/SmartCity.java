@@ -56,8 +56,20 @@ public class SmartCity {
             users.remove(removedID);
     }
 
-    public void addTip(Tip tip){
-        tipsByID.put(tip.getId(), tip);
+    public void addTip(Tip tip) throws UserDoesntExistException {
+        if (!users.containsKey(tip.getAuthorID()))
+            throw new UserDoesntExistException();
+        else
+            tipsByID.put(tip.getId(), tip);
+    }
+
+    public void removeTip(String userID, String tipID) throws UserDoesntExistException, TipDoesntExistException{
+        if (!users.containsKey(userID))
+            throw new UserDoesntExistException();
+        else if (!tipsByID.containsKey(tipID))
+            throw new TipDoesntExistException();
+        else
+            tipsByID.remove(tipID);
     }
 
 

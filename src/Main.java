@@ -17,7 +17,7 @@ public class Main {
     //Comms
     private static final String PROMPT = "> ";
     private static final String EXIT = "exit";
-    private static final String HELP = "help";
+    private static final String MENU = "menu";
     private static final String ADD_USER = "adduser";
     private static final String REMOVE_USER = "removeuser";
     private static final String ADD_TIP = "addtip";
@@ -27,7 +27,8 @@ public class Main {
     //Outputs
     private static final String BYE = "Goodbye :D";
     private static final String USER_REGISTRATION = "Registration Complete!";
-    private static final String REMOVAL_SUCCESS = "Removal complete!";
+    private static final String USER_REMOVED = "User removed!";
+    private static final String TIP_REMOVED = "Tip removed!";
     private static final String UNKNOWN_COMMAND = "Unknown command.";
 
 
@@ -39,7 +40,7 @@ public class Main {
         String comm = in.nextLine().toLowerCase();
         while (!comm.equals(EXIT)) {
             switch (comm) {
-                case HELP:
+                case MENU:
                     helpCommandList();
                     break;
                 case ADD_USER:
@@ -50,6 +51,9 @@ public class Main {
                     break;
                 case ADD_TIP:
                     addTip(s, in);
+                    break;
+                case REMOVE_TIP:
+                    removeTip(s, in);
                     break;
                 default:
                     System.out.println(UNKNOWN_COMMAND);
@@ -65,7 +69,7 @@ public class Main {
 
     private static void helpCommandList() {
         System.out.println(EXIT);
-        System.out.println(HELP);
+        System.out.println(MENU);
         System.out.println(ADD_USER);
         System.out.println(REMOVE_USER);
         System.out.println(ADD_TIP);
@@ -105,33 +109,46 @@ public class Main {
         String removedID = in.next(); in.nextLine();
         try{
             s.removeUser(removerID, removedID);
-            System.out.println(REMOVAL_SUCCESS);
+            System.out.println(USER_REMOVED);
         }catch(NotAdminException | UserDoesntExistException e){
             System.out.println(e.getMessage());
         }
     }
 
     private static void addTip(SmartCity s, Scanner in){
+        System.out.print("User ID: ");
+        String userID = in.next(); in.nextLine();
+
+        System.out.print("Tip ID: ");
+        String tipID = in.next(); in.nextLine();
+
+        System.out.print("Address: ");
+        String address = in.nextLine();
+
+        System.out.print("Description: ");
+        String description = in.nextLine();
+
+        try{
+            Tip tip = new Tip(userID, tipID, address, description);
+            s.addTip(tip);
+        }catch(UserDoesntExistException e){
+            System.out.println(e.getMessage());
+        } catch(InvalidTypeException e){
+            System.out.println("Wrong info.");
+        }
+    }
+
+    private static void removeTip(SmartCity s, Scanner in){
         System.out.println("User ID: ");
         String userID = in.next(); in.nextLine();
 
         System.out.println("Tip ID: ");
         String tipID = in.next(); in.nextLine();
 
-        System.out.println("Address: ");
-        String address = in.nextLine();
-
-        System.out.println("Description: ");
-        String description = in.nextLine();
-
         try{
-            Tip tip = new Tip(userID, tipID, address, description);
-            s.addTip(tip);
-        }catch(InvalidTypeException e){
-            System.out.println("Wrong info.");
+            s.removeTip(userID, tipID);
+            System.out.println(TIP_REMOVED);
         }
-
-
     }
 
 

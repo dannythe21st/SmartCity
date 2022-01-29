@@ -44,5 +44,12 @@ public class User implements UserIF{
         level = level++;
     }
 
+    public void updateLevel(){
+        if (numOfTips < 5)
+            this.level = 0;
+        else{
+            this.level = Math.floorDiv(numOfTips,  5);
+        }
+    }
 
 }

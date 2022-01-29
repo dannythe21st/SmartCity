@@ -3,7 +3,7 @@ package Tip;
 import User.User;
 
 public interface TipIF {
-    String getAuthor();
+    String getAuthorID();
 
     String getId();
 

@@ -16,7 +16,7 @@ public class Tip implements TipIF{
         this.description = description;
     }
 
-    public String getAuthor() { return authorID; }
+    public String getAuthorID() { return authorID; }
 
     public String getId() { return id; }
 
