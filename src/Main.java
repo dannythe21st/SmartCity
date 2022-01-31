@@ -26,6 +26,8 @@ public class Main {
     private static final String GET_TIPS_BY_USER = "tipbyuser";
     private static final String GET_TIPS_BY_STREET = "tipbystreet";
     private static final String GET_TIPS_BY_SHOP = "tipbyshop";
+    private static final String LIST_USERS = "listusers";
+    private static final String LIST_ALL_TIPS = "listalltips";
 
 
     //Outputs
@@ -67,6 +69,12 @@ public class Main {
                     break;
                 case GET_TIPS_BY_SHOP:
                     getTipsByShop(s, in);
+                    break;
+                case LIST_USERS:
+                    listUsers(s, in);
+                    break;
+                case LIST_ALL_TIPS:
+                    listAllTips(s, in);
                     break;
                 default:
                     System.out.println(UNKNOWN_COMMAND);
@@ -177,8 +185,10 @@ public class Main {
             Iterator<Tip> it = s.getTipsByUser(userID);
             int tipNum = 1;
             while(it.hasNext()){
-                System.out.println(tipNum++ +". " + it.next().getShop());
-                System.out.print("   " + it.next().getDescription());
+                Tip t = it.next();
+                System.out.println(tipNum++ +". " + t.getShop().getName());
+                System.out.println("   " + t.getAddress());
+                System.out.println("   " + t.getDescription());
             }
         }catch(UserDoesntExistException | UserHasNoTipsException e){
             System.out.println(e.getMessage());
@@ -192,8 +202,9 @@ public class Main {
             Iterator<Tip> it = s.getTipsByStreet(address);
             int tipNum = 1;
             while(it.hasNext()){
-                System.out.print(tipNum++ +". " + it.next().getShop());
-                System.out.print("  " + it.next().getDescription());
+                Tip t = it.next();
+                System.out.println(tipNum++ +". " + t.getShop().getName());
+                System.out.println("  " + t.getDescription());
             }
         }catch(NoTipsForThatStreetException e){
             System.out.println(e.getMessage());
@@ -208,12 +219,30 @@ public class Main {
             Iterator<Tip> it = s.getTipsByShop(shopName);
             int tipNum = 1;
             while(it.hasNext()){
-                System.out.print(tipNum++ +". " + it.next().getShop());
-                System.out.print("  " + it.next().getDescription());
+                Tip t = it.next();
+                System.out.println(tipNum++ +". " + t.getShop().getName());
+                System.out.println("  " + t.getDescription());
             }
-        }catch(NoTipsForThatStreetException e){
+        }catch(NoTipsForThatShopException e){
             System.out.println(e.getMessage());
         }
     }
 
+    private static void listUsers(SmartCity s, Scanner in){
+        Iterator<User> it = s.listUsers();
+        while (it.hasNext()){
+            User u = it.next();
+            System.out.println(u.getName() + ", " + u.getAge());
+
+        }
+    }
+
+    private static void listAllTips(SmartCity s, Scanner in){
+        Iterator<Tip> it = s.listAllTips();
+        while (it.hasNext()){
+            Tip t = it.next();
+            System.out.println(t.getShop() + ", " + t.getDescription());
+
+        }
+    }
 }
