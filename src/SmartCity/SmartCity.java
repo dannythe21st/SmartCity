@@ -17,15 +17,11 @@ public class SmartCity {
 
     private Map<String, User> users; //id, User
     private Map<String, Tip> tipsByID; //id, tip
-    //private Map<String, Tip> tipsByShop; //shopname, tip
-    //private Map<String, Tip> tipsByStreet; //address, tip
     private Map<String, Establishment> shops; //name, Shop
 
     public SmartCity() {
         this.users = new HashMap<>();
         this.tipsByID = new HashMap<>();
-//        this.tipsByShop = new HashMap<>();
-//        this.tipsByStreet = new HashMap<>();
         this.shops = new HashMap<>();
     }
 
@@ -85,8 +81,6 @@ public class SmartCity {
             Tip tip = new Tip(userID, tipID, s, address, description);
             //save tip
             tipsByID.put(tipID, tip);
-            //tipsByShop.put(shopName, tip);
-            //tipsByStreet.put(address, tip);
 
             //update user stats + save tip to user
             users.get(userID).updateLevel();
@@ -114,7 +108,13 @@ public class SmartCity {
             tipsByID.remove(tipID);
     }
 
-
+    /**
+     * List tips added by a user
+     * @param userID
+     * @return
+     * @throws UserDoesntExistException
+     * @throws UserHasNoTipsException
+     */
     public Iterator<Tip> getTipsByUser(String userID) throws UserDoesntExistException, UserHasNoTipsException{
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
@@ -125,6 +125,12 @@ public class SmartCity {
         }
     }
 
+    /**
+     * List tips associated to establishments in a particular street
+     * @param address
+     * @return
+     * @throws NoTipsForThatStreetException
+     */
     public Iterator<Tip> getTipsByStreet(String address) throws NoTipsForThatStreetException{
         List<Tip> tipsByStreet = new LinkedList<>();
         for (Tip t : tipsByID.values()) {
@@ -135,6 +141,12 @@ public class SmartCity {
         return tipsByStreet.iterator();
     }
 
+    /**
+     * List tips associated with a particular establishment
+     * @param shopName
+     * @return
+     * @throws NoTipsForThatShopException
+     */
     public Iterator<Tip> getTipsByShop(String shopName) throws NoTipsForThatShopException{
         List<Tip> tipsByShop = new LinkedList<>();
         for (Tip t : tipsByID.values()) {

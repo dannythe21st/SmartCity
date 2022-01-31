@@ -71,7 +71,7 @@ public class Main {
                     getTipsByShop(s, in);
                     break;
                 case LIST_USERS:
-                    listUsers(s, in);
+                    listUsers(s);
                     break;
                 case LIST_ALL_TIPS:
                     listAllTips(s, in);
@@ -187,8 +187,8 @@ public class Main {
             while(it.hasNext()){
                 Tip t = it.next();
                 System.out.println(tipNum++ +". " + t.getShop().getName());
-                System.out.println("   " + t.getAddress());
-                System.out.println("   " + t.getDescription());
+                System.out.println("Address: " + t.getAddress());
+                System.out.println("Description: " + t.getDescription());
             }
         }catch(UserDoesntExistException | UserHasNoTipsException e){
             System.out.println(e.getMessage());
@@ -204,7 +204,8 @@ public class Main {
             while(it.hasNext()){
                 Tip t = it.next();
                 System.out.println(tipNum++ +". " + t.getShop().getName());
-                System.out.println("  " + t.getDescription());
+                System.out.println("Address: " + t.getAddress());
+                System.out.println("Description: " + t.getDescription());
             }
         }catch(NoTipsForThatStreetException e){
             System.out.println(e.getMessage());
@@ -221,28 +222,39 @@ public class Main {
             while(it.hasNext()){
                 Tip t = it.next();
                 System.out.println(tipNum++ +". " + t.getShop().getName());
-                System.out.println("  " + t.getDescription());
+                System.out.println("Address: " + t.getAddress());
+                System.out.println("Description: " + t.getDescription());
             }
         }catch(NoTipsForThatShopException e){
             System.out.println(e.getMessage());
         }
     }
 
-    private static void listUsers(SmartCity s, Scanner in){
+    private static void listUsers(SmartCity s){
         Iterator<User> it = s.listUsers();
         while (it.hasNext()){
             User u = it.next();
-            System.out.println(u.getName() + ", " + u.getAge());
-
+            int i = u.getType();
+            switch (i){
+                case 1:
+                    System.out.println(u.getName() + ", " + u.getAge() + ", " + "ADMIN");
+                    break;
+                case 2:
+                    System.out.println(u.getName() + ", " + u.getAge() + ", " + "REGULAR");
+                    break;
+            }
+            System.out.println("Tip count:" + u.getNumOfTips() + "Level: " + u.getLevel());
         }
     }
 
     private static void listAllTips(SmartCity s, Scanner in){
         Iterator<Tip> it = s.listAllTips();
+        int tipNum = 1;
         while (it.hasNext()){
             Tip t = it.next();
-            System.out.println(t.getShop() + ", " + t.getDescription());
-
+            System.out.println(tipNum++ +". " + t.getShop().getName());
+            System.out.println("   " + t.getAddress());
+            System.out.println("   " + t.getDescription());
         }
     }
 }
