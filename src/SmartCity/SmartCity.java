@@ -108,6 +108,17 @@ public class SmartCity {
             tipsByID.remove(tipID);
     }
 
+    public void rateShop(String shopName, double rating) throws ShopDoesntExistException, InvalidRatingException{
+        if (!shops.containsKey(shopName))
+            throw new ShopDoesntExistException();
+        else if (rating < 0 || rating > 5)
+            throw new InvalidRatingException();
+        else{
+            Establishment s = shops.get(shopName);
+            s.addReview(rating);
+        }
+    }
+
     /**
      * List tips added by a user
      * @param userID
