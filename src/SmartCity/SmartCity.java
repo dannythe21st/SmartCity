@@ -119,6 +119,19 @@ public class SmartCity {
         }
     }
 
+    public User getUserInfo(String userID) throws UserDoesntExistException{
+        if (!users.containsKey(userID))
+            throw new UserDoesntExistException();
+        return users.get(userID);
+    }
+
+    public Establishment getShopInfo(String shopID) throws ShopDoesntExistException{
+        if (!shops.containsKey(shopID))
+            throw new ShopDoesntExistException();
+        else
+            return shops.get(shopID);
+    }
+
     /**
      * List tips added by a user
      * @param userID
@@ -166,12 +179,6 @@ public class SmartCity {
         }
         if (tipsByShop.size() == 0) throw new NoTipsForThatShopException();
         return tipsByShop.iterator();
-    }
-
-    public User getUserInfo(String userID) throws UserDoesntExistException{
-        if (!users.containsKey(userID))
-            throw new UserDoesntExistException();
-        return users.get(userID);
     }
 
     public Iterator<User> listUsers(){

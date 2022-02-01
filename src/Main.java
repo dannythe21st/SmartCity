@@ -1,3 +1,4 @@
+import Establishment.Establishment;
 import SmartCity.Exceptions.*;
 import SmartCity.SmartCity;
 import Tip.Tip;
@@ -66,6 +67,7 @@ public class Main {
     private static final String TIP_COUNT_P = "Tip count: ";
     private static final String LEVEL_P = "Level: ";
     private static final String STREET_NAME_P = "Street name: ";
+    private static final String RATING_P = "Rating: ";
 
 
     //Outputs
@@ -96,10 +98,11 @@ public class Main {
                 case ADD_TIP -> addTip(s, in);
                 case REMOVE_TIP -> removeTip(s, in);
                 case RATE_SHOP -> rateShop(s, in);
+                case USER_INFO -> getUserInfo(s, in);
+                case SHOP_INFO -> getShopInfo(s, in);
                 case GET_TIPS_BY_USER -> getTipsByUser(s, in);
                 case GET_TIPS_BY_STREET -> getTipsByStreet(s, in);
                 case GET_TIPS_BY_SHOP -> getTipsByShop(s, in);
-                case USER_INFO -> getUserInfo(s, in);
                 case LIST_USERS -> listUsers(s);
                 case LIST_ALL_TIPS -> listAllTips(s);
                 default -> System.out.println(UNKNOWN_COMMAND);
@@ -122,6 +125,7 @@ public class Main {
         System.out.println(REMOVE_TIP);
         System.out.println(RATE_SHOP);
         System.out.println(USER_INFO);
+        System.out.println(SHOP_INFO);
         System.out.println(GET_TIPS_BY_USER);
         System.out.println(GET_TIPS_BY_STREET);
         System.out.println(GET_TIPS_BY_SHOP);
@@ -221,15 +225,6 @@ public class Main {
         }
     }
 
-
-
-
-
-
-
-
-
-
     private static void getUserInfo(SmartCity s, Scanner in){
         System.out.print(USER_ID_P);
         String userID = in.next(); in.nextLine();
@@ -240,6 +235,19 @@ public class Main {
             System.out.println(TIP_COUNT_P + u.getNumOfTips());
             System.out.println(LEVEL_P + u.getLevel());
         }catch(UserDoesntExistException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void getShopInfo(SmartCity s, Scanner in){
+        System.out.println(SHOP_NAME_P);
+        String shopName = in.nextLine();
+        try{
+            Establishment e = s.getShopInfo(shopName);
+            System.out.println(SHOP_NAME_P + e.getName());
+            System.out.println(ADDRESS_P + e.getAddress());
+            System.out.println(RATING_P + e.getRating() + " (" + e.getNumRatings() + ")");
+        }catch (ShopDoesntExistException e){
             System.out.println(e.getMessage());
         }
     }
