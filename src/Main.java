@@ -6,6 +6,7 @@ import User.User;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author dannythe21st on github
@@ -14,6 +15,17 @@ import java.util.Scanner;
  */
 
 public class Main {
+
+    //font colors
+    public static final String TEXT_RESET = "\u001B[0m";
+    public static final String TEXT_BLACK = "\u001B[30m";
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_GREEN = "\u001B[32m";
+    public static final String TEXT_YELLOW = "\u001B[33m";
+    public static final String TEXT_BLUE = "\u001B[34m";
+    public static final String TEXT_PURPLE = "\u001B[35m";
+    public static final String TEXT_CYAN = "\u001B[36m";
+    public static final String TEXT_WHITE = "\u001B[37m";
 
     //Comms
     private static final String PROMPT = "> ";
@@ -27,68 +39,73 @@ public class Main {
     private static final String GET_TIPS_BY_STREET = "tipbystreet";
     private static final String GET_TIPS_BY_SHOP = "tipbyshop";
     private static final String LIST_USERS = "listusers";
+    private static final String USER_INFO = "userinfo";
     private static final String LIST_ALL_TIPS = "listalltips";
 
 
     //Outputs
-    private static final String BYE = "Goodbye :D";
+
+    private static final String WELCOME = "WELCOME TO SMART CITY :D";
+    private static final String AUTHOR = "powered by dannythe21st.";
+    private static final String BOOTING_SERVICE = "Booting system...";
+    private static final String PRINTING_MENU = "Menu:";
+    private static final String BLUE_SCREEN = "Something went wrong :c";
+    private static final String BYE = "See you soon.";
     private static final String USER_REGISTRATION = "Registration Complete!";
     private static final String USER_REMOVED = "User removed!";
     private static final String TIP_REMOVED = "Tip removed!";
+    private static final String TIP_REGISTERED = "Tip registered!";
     private static final String UNKNOWN_COMMAND = "Unknown command.";
 
 
     public static void main(String[] args) {
 
+        //Initialization
         Scanner in = new Scanner(System.in);
         SmartCity s = new SmartCity();
+
+        //print menu + read 1st comm
+        welcome();
         System.out.print(PROMPT);
         String comm = in.nextLine().toLowerCase();
         while (!comm.equals(EXIT)) {
             switch (comm) {
-                case MENU:
-                    helpCommandList();
-                    break;
-                case ADD_USER:
-                    addUser(s, in);
-                    break;
-                case REMOVE_USER:
-                    removeUser(s, in);
-                    break;
-                case ADD_TIP:
-                    addTip(s, in);
-                    break;
-                case REMOVE_TIP:
-                    removeTip(s, in);
-                    break;
-                case GET_TIPS_BY_USER:
-                    getTipsByUser(s, in);
-                    break;
-                case GET_TIPS_BY_STREET:
-                    getTipsByStreet(s, in);
-                    break;
-                case GET_TIPS_BY_SHOP:
-                    getTipsByShop(s, in);
-                    break;
-                case LIST_USERS:
-                    listUsers(s);
-                    break;
-                case LIST_ALL_TIPS:
-                    listAllTips(s, in);
-                    break;
-                default:
-                    System.out.println(UNKNOWN_COMMAND);
+                case MENU -> menu();
+                case ADD_USER -> addUser(s, in);
+                case REMOVE_USER -> removeUser(s, in);
+                case ADD_TIP -> addTip(s, in);
+                case REMOVE_TIP -> removeTip(s, in);
+                case GET_TIPS_BY_USER -> getTipsByUser(s, in);
+                case GET_TIPS_BY_STREET -> getTipsByStreet(s, in);
+                case GET_TIPS_BY_SHOP -> getTipsByShop(s, in);
+                case USER_INFO -> getUserInfo(s, in);
+                case LIST_USERS -> listUsers(s);
+                case LIST_ALL_TIPS -> listAllTips(s);
+                default -> System.out.println(UNKNOWN_COMMAND);
             }
             System.out.println();
             System.out.print(PROMPT);
             comm = in.nextLine().toLowerCase();
         }
         System.out.println();
-        System.out.print(BYE);
+        System.out.print(TEXT_GREEN + BYE + TEXT_RESET);
         in.close();
     }
 
-    private static void helpCommandList() {
+    private static void welcome() {
+        System.out.println(TEXT_PURPLE + WELCOME + TEXT_RESET);
+        delayPrints(1);
+        System.out.println(TEXT_PURPLE + AUTHOR + TEXT_RESET + "\n");
+        delayPrints(1);
+        System.out.println(TEXT_RED + BOOTING_SERVICE + TEXT_RESET + "\n");
+        delayPrints(2);
+        System.out.println(TEXT_GREEN + PRINTING_MENU + TEXT_RESET);
+        delayPrints(2);
+        menu();
+        System.out.println();
+    }
+
+    private static void menu() {
         System.out.println(EXIT);
         System.out.println(MENU);
         System.out.println(ADD_USER);
@@ -98,6 +115,7 @@ public class Main {
         System.out.println(GET_TIPS_BY_USER);
         System.out.println(GET_TIPS_BY_STREET);
         System.out.println(GET_TIPS_BY_SHOP);
+        System.out.println(USER_INFO);
     }
 
     private static void addUser(SmartCity s, Scanner in) {
@@ -156,6 +174,7 @@ public class Main {
 
         try{
             s.addTip(userID, tipID, shopName, address, description);
+            System.out.println(TIP_REGISTERED);
         }catch(UserDoesntExistException e){
             System.out.println(e.getMessage());
         } catch(InvalidTypeException e){
@@ -230,31 +249,50 @@ public class Main {
         }
     }
 
+    private static void getUserInfo(SmartCity s, Scanner in){
+        System.out.print("User ID: ");
+        String userID = in.next(); in.nextLine();
+        try{
+            User u = s.getUserInfo(userID);
+            System.out.println("Name: " + u.getName());
+            System.out.println("Age: " + u.getAge());
+            System.out.println("Tip count: " + u.getNumOfTips());
+            System.out.println("Level: " + u.getLevel());
+        }catch(UserDoesntExistException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     private static void listUsers(SmartCity s){
         Iterator<User> it = s.listUsers();
         while (it.hasNext()){
             User u = it.next();
             int i = u.getType();
-            switch (i){
-                case 1:
-                    System.out.println(u.getName() + ", " + u.getAge() + ", " + "ADMIN");
-                    break;
-                case 2:
-                    System.out.println(u.getName() + ", " + u.getAge() + ", " + "REGULAR");
-                    break;
+            switch (i) {
+                case 1 -> System.out.println(u.getName() + ", " + u.getAge() + ", " + "ADMIN" +
+                        ", Tip count:" + u.getNumOfTips() + ", Level: " + u.getLevel() + "\n");
+                case 2 -> System.out.println(u.getName() + ", " + u.getAge() + ", " + "REGULAR" +
+                        ", Tip count:" + u.getNumOfTips() + ", Level: " + u.getLevel() + "\n");
             }
-            System.out.println("Tip count:" + u.getNumOfTips() + "Level: " + u.getLevel());
         }
     }
 
-    private static void listAllTips(SmartCity s, Scanner in){
+    private static void listAllTips(SmartCity s){
         Iterator<Tip> it = s.listAllTips();
         int tipNum = 1;
         while (it.hasNext()){
             Tip t = it.next();
-            System.out.println(tipNum++ +". " + t.getShop().getName());
-            System.out.println("   " + t.getAddress());
-            System.out.println("   " + t.getDescription());
+            System.out.println(tipNum++ +". Shop name: " + t.getShop().getName());
+            System.out.println("Address: " + t.getAddress());
+            System.out.println("Description: " + t.getDescription());
+        }
+    }
+
+    private static void delayPrints(long delay){
+        try{
+            TimeUnit.SECONDS.sleep(delay);
+        }catch (InterruptedException e){
+            System.out.println(BLUE_SCREEN);
         }
     }
 }

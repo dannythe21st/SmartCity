@@ -157,6 +157,12 @@ public class SmartCity {
         return tipsByShop.iterator();
     }
 
+    public User getUserInfo(String userID) throws UserDoesntExistException{
+        if (!users.containsKey(userID))
+            throw new UserDoesntExistException();
+        return users.get(userID);
+    }
+
     public Iterator<User> listUsers(){
         return users.values().iterator();
     }
