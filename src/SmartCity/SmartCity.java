@@ -68,18 +68,15 @@ public class SmartCity {
      * @throws UserDoesntExistException
      */
     public void addTip(String userID, String tipID, String shopName, String address, String description)
-            throws UserDoesntExistException {
+            throws UserDoesntExistException, ShopDoesntExistException {
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
+        else if (!shops.containsKey(shopName))
+            throw new ShopDoesntExistException();
         else{
-            Establishment s;
-            if (!shops.containsKey(shopName))
-                s = new Establishment(shopName, address);
-            else
-                s = shops.get(shopName);
-
-            Tip tip = new Tip(userID, tipID, s, address, description);
             //save tip
+            Establishment s = shops.get(shopName);
+            Tip tip = new Tip(userID, tipID, s, address, description);
             tipsByID.put(tipID, tip);
 
             //update user stats + save tip to user
@@ -107,6 +104,20 @@ public class SmartCity {
         else
             tipsByID.remove(tipID);
     }
+
+    public void addShop(String userID, String shopName, String address) throws UserDoesntExistException,
+            ShopAlreadyExistException{
+        if (!users.containsKey(userID))
+            throw new UserDoesntExistException();
+        else if (shops.containsKey(shopName))
+            throw new ShopAlreadyExistException();
+        else{
+            User owner = users.get(userID);
+            Establishment s = new Establishment(owner, shopName, address);
+        }
+    }
+
+    public void removeShop()
 
     public void rateShop(String shopName, double rating) throws ShopDoesntExistException, InvalidRatingException{
         if (!shops.containsKey(shopName))

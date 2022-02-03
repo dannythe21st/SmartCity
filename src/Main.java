@@ -42,6 +42,8 @@ public class Main {
     private static final String REMOVE_USER = "removeuser";
     private static final String ADD_TIP = "addtip";
     private static final String REMOVE_TIP = "removetip";
+    private static final String ADD_SHOP = "addshop";
+    private static final String REMOVE_SHOP = "removeshop";
     private static final String RATE_SHOP = "rateshop";
     private static final String USER_INFO = "userinfo";
     private static final String SHOP_INFO = "shopinfo";
@@ -68,6 +70,7 @@ public class Main {
     private static final String LEVEL_P = "Level: ";
     private static final String STREET_NAME_P = "Street name: ";
     private static final String RATING_P = "Rating: ";
+    private static final String OWNER_ID_P = "Owner ID: ";
 
 
     //Outputs
@@ -76,7 +79,10 @@ public class Main {
     private static final String TIP_REGISTERED = "Tip registered!";
     private static final String TIP_REMOVED = "Tip removed!";
     private static final String REVIEW_REGISTERED = "Review registered!";
+    private static final String SHOP_REGISTERED = "Shop registered!";
+    private static final String SHOP_REMOVED = "Shop removed!";
     private static final String UNKNOWN_COMMAND = "Unknown command.";
+    private static final String WRONG_INFO = "Incorrect information.";
     private static final String BYE = "See you soon.";
 
 
@@ -97,6 +103,8 @@ public class Main {
                 case REMOVE_USER -> removeUser(s, in);
                 case ADD_TIP -> addTip(s, in);
                 case REMOVE_TIP -> removeTip(s, in);
+                case ADD_SHOP -> addShop(s, in);
+                case REMOVE_SHOP -> removeShop(s, in);
                 case RATE_SHOP -> rateShop(s, in);
                 case USER_INFO -> getUserInfo(s, in);
                 case SHOP_INFO -> getShopInfo(s, in);
@@ -151,7 +159,7 @@ public class Main {
         }catch(UserAlreadyExistsException | InvalidAgeException | InvalidTypeException e){
             System.out.println(e.getMessage());
         } catch(InputMismatchException e){
-            System.out.println("Incorrect information.");
+            System.out.println(WRONG_INFO);
         }
     }
 
@@ -191,7 +199,7 @@ public class Main {
         }catch(UserDoesntExistException e){
             System.out.println(e.getMessage());
         } catch(InvalidTypeException e){
-            System.out.println("Wrong info.");
+            System.out.println(WRONG_INFO);
         }
     }
 
@@ -208,6 +216,28 @@ public class Main {
         }catch (UserDoesntExistException | TipDoesntExistException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    private static void addShop(SmartCity s, Scanner in){
+        System.out.println(OWNER_ID_P);
+        String userID = in.next(); in.nextLine();
+
+        System.out.println(SHOP_NAME_P);
+        String shopName = in.nextLine();
+
+        System.out.println(ADDRESS_P);
+        String address = in.nextLine();
+
+        try{
+            s.addShop(userID, shopName, address);
+            System.out.println(SHOP_REGISTERED);
+        }catch(UserDoesntExistException | ShopAlreadyExistException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void removeShop(SmartCity s, Scanner in){
+
     }
 
     private static void rateShop(SmartCity s, Scanner in){

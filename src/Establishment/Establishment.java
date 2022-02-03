@@ -1,13 +1,17 @@
 package Establishment;
 
+import User.User;
+
 public class Establishment implements EstablishmentIF{
 
+    private User owner;
     private String name;
     private String address;
     private double rating;
     private int numRatings;
 
-    public Establishment(String name, String address) {
+    public Establishment(User owner, String name, String address) {
+        this.owner = owner;
         this.name = name;
         this.address = address;
         this.rating = 0;
@@ -33,6 +37,9 @@ public class Establishment implements EstablishmentIF{
     public int getNumRatings() {
         return numRatings;
     }
+
+    @Override
+    public User getOwner() { return owner; }
 
     @Override
     public void addReview(double rating) {
