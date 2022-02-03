@@ -15,7 +15,7 @@ public class User implements UserIF{
     private int level;
     private int type; //Admin (1) || Regular (2)
     private Map<String, Tip> tips;
-
+    //TODO Adicionar lojas que o user tem
 
     public User(String id, String name, int age, int type){
         this.id = id;

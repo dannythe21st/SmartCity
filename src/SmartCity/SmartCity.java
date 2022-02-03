@@ -114,10 +114,20 @@ public class SmartCity {
         else{
             User owner = users.get(userID);
             Establishment s = new Establishment(owner, shopName, address);
+            shops.put(shopName, s);
         }
     }
 
-    public void removeShop()
+    public void removeShop(String userID, String shopName) throws ShopDoesntExistException,
+            UserNotTheOwnerException {
+        if (!shops.containsKey(shopName))
+            throw new ShopDoesntExistException();
+        else if (!shops.get(shopName).getOwner().getID().equals(userID))
+            throw new UserNotTheOwnerException();
+        else{
+            shops.remove(shopName);
+        }
+    }
 
     public void rateShop(String shopName, double rating) throws ShopDoesntExistException, InvalidRatingException{
         if (!shops.containsKey(shopName))
