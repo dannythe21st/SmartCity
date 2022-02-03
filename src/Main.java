@@ -71,6 +71,7 @@ public class Main {
     private static final String STREET_NAME_P = "Street name: ";
     private static final String RATING_P = "Rating: ";
     private static final String OWNER_ID_P = "Owner ID: ";
+    private static final String PASSWORD_P = "Password: ";
 
 
     //Outputs
@@ -223,6 +224,9 @@ public class Main {
         System.out.println(OWNER_ID_P);
         String userID = in.next(); in.nextLine();
 
+        System.out.println(PASSWORD_P);
+        String password = in.next(); in.nextLine();
+
         System.out.println(SHOP_NAME_P);
         String shopName = in.nextLine();
 
@@ -230,7 +234,7 @@ public class Main {
         String address = in.nextLine();
 
         try{
-            s.addShop(userID, shopName, address);
+            s.addShop(userID, shopName, address, password);
             System.out.println(SHOP_REGISTERED);
         }catch(UserDoesntExistException | ShopAlreadyExistException e){
             System.out.println(e.getMessage());
@@ -244,10 +248,14 @@ public class Main {
         System.out.println(SHOP_NAME_P);
         String shopName = in.nextLine();
 
+        System.out.println(PASSWORD_P);
+        String password = in.next(); in.nextLine();
+
         try{
-            s.removeShop(userID, shopName);
+            s.removeShop(userID, shopName, password);
             System.out.println(SHOP_REMOVED);
-        }catch(ShopDoesntExistException | UserDoesntExistException | UserNotTheOwnerException e){
+        }catch(ShopDoesntExistException | UserDoesntExistException |
+                UserNotTheOwnerException | WrongPasswordException e){
             System.out.println(e.getMessage());
         }
     }

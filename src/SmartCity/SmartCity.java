@@ -107,7 +107,7 @@ public class SmartCity {
             tipsByID.remove(tipID);
     }
 
-    public void addShop(String userID, String shopName, String address) throws UserDoesntExistException,
+    public void addShop(String userID, String shopName, String address, String password) throws UserDoesntExistException,
             ShopAlreadyExistException{
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
@@ -115,19 +115,21 @@ public class SmartCity {
             throw new ShopAlreadyExistException();
         else{
             User owner = users.get(userID);
-            Establishment s = new Establishment(owner, shopName, address);
+            Establishment s = new Establishment(owner, shopName, address, password);
             shops.put(shopName, s);
         }
     }
 
-    public void removeShop(String userID, String shopName) throws ShopDoesntExistException, UserDoesntExistException,
-            UserNotTheOwnerException {
+    public void removeShop(String userID, String shopName, String password) throws ShopDoesntExistException, UserDoesntExistException,
+            UserNotTheOwnerException, WrongPasswordException {
         if (!shops.containsKey(shopName))
             throw new ShopDoesntExistException();
         else if (!users.containsKey(userID))
             throw new UserDoesntExistException();
         else if (!shops.get(shopName).getOwner().getID().equals(userID))
             throw new UserNotTheOwnerException();
+        else if (!shops.get(shopName).getPassword().equals(password))
+            throw new WrongPasswordException();
         else{
             shops.remove(shopName);
         }

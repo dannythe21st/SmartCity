@@ -14,6 +14,8 @@ public interface EstablishmentIF {
 
     User getOwner();
 
+    String getPassword();
+
     void addReview(double rating);
 
 }
