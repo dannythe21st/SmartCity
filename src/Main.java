@@ -200,7 +200,7 @@ public class Main {
         try{
             s.addTip(userID, tipID, shopName, address, description);
             System.out.println(TIP_REGISTERED);
-        }catch(UserDoesntExistException | InvalidTypeException e){
+        }catch(UserDoesntExistException | ShopDoesntExistException e){
             System.out.println(e.getMessage());
         }
     }
@@ -215,7 +215,7 @@ public class Main {
         try{
             s.removeTip(userID, tipID);
             System.out.println(TIP_REMOVED);
-        }catch (UserDoesntExistException | TipDoesntExistException e){
+        }catch (UserDoesntExistException | TipDoesntExistException | NotAdminException e){
             System.out.println(e.getMessage());
         }
     }

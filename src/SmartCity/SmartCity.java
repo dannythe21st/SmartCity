@@ -95,7 +95,8 @@ public class SmartCity {
      * @throws UserDoesntExistException
      * @throws TipDoesntExistException
      */
-    public void removeTip(String userID, String tipID) throws UserDoesntExistException, TipDoesntExistException{
+    public void removeTip(String userID, String tipID) throws UserDoesntExistException, TipDoesntExistException,
+            NotAdminException{
         User u = users.get(userID);
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
@@ -162,7 +163,7 @@ public class SmartCity {
     /**
      * List tips added by a user
      * @param userID
-     * @return
+     * @return tip iterator
      * @throws UserDoesntExistException
      * @throws UserHasNoTipsException
      */
@@ -179,7 +180,7 @@ public class SmartCity {
     /**
      * List tips associated to establishments in a particular street
      * @param address
-     * @return
+     * @return tip iterator
      * @throws NoTipsForThatStreetException
      */
     public Iterator<Tip> getTipsByStreet(String address) throws NoTipsForThatStreetException{
@@ -195,7 +196,7 @@ public class SmartCity {
     /**
      * List tips associated with a particular establishment
      * @param shopName
-     * @return
+     * @return tip iterator
      * @throws NoTipsForThatShopException
      */
     public Iterator<Tip> getTipsByShop(String shopName) throws NoTipsForThatShopException{
@@ -210,12 +211,16 @@ public class SmartCity {
 
     /**
      * Lists all users
-     * @return
+     * @return user iterator
      */
     public Iterator<User> listUsers(){
         return users.values().iterator();
     }
 
+    /**
+     * Lists all tips
+     * @return tip iterator
+     */
     public Iterator<Tip> listAllTips(){
         return tipsByID.values().iterator();
     }
