@@ -50,15 +50,16 @@ public class User implements UserIF{
     public void updateLevel(){
         if (numOfTips < 5)
             this.level = 0;
-        else{
+        else
             this.level = Math.floorDiv(numOfTips,  5);
-        }
     }
 
+    @Override
     public void addTip(Tip tip){
         tips.put(tip.getId(), tip);
     }
 
+    @Override
     public Iterator<Tip> tipsByUser(){
         return tips.values().iterator();
     }

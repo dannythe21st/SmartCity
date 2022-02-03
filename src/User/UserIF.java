@@ -1,5 +1,9 @@
 package User;
 
+import Tip.Tip;
+
+import java.util.Iterator;
+
 public interface UserIF {
 
     String getName();
@@ -15,4 +19,8 @@ public interface UserIF {
     int getType();
 
     void updateLevel();
+
+    void addTip(Tip tip);
+
+    Iterator<Tip> tipsByUser();
 }

@@ -33,11 +33,13 @@ public class SmartCity {
      * @throws InvalidAgeException
      */
     public void addUser(User u) throws UserAlreadyExistsException, InvalidTypeException,
-            InvalidAgeException{
+            InvalidAgeException, UserTooYoungException{
         if (users.containsValue(u))
             throw new UserAlreadyExistsException();
-        else if (u.getAge() < MINIMUM_AGE)
+        else if (u.getAge() < 0)
             throw new InvalidAgeException();
+        else if (u.getAge() < MINIMUM_AGE && u.getAge() > 0)
+            throw new UserTooYoungException();
         else if(u.getType() != ADMIN && u.getType() != REGULAR)
             throw new InvalidTypeException();
         else
@@ -118,10 +120,12 @@ public class SmartCity {
         }
     }
 
-    public void removeShop(String userID, String shopName) throws ShopDoesntExistException,
+    public void removeShop(String userID, String shopName) throws ShopDoesntExistException, UserDoesntExistException,
             UserNotTheOwnerException {
         if (!shops.containsKey(shopName))
             throw new ShopDoesntExistException();
+        else if (!users.containsKey(userID))
+            throw new UserDoesntExistException();
         else if (!shops.get(shopName).getOwner().getID().equals(userID))
             throw new UserNotTheOwnerException();
         else{
@@ -202,6 +206,10 @@ public class SmartCity {
         return tipsByShop.iterator();
     }
 
+    /**
+     * Lists all users
+     * @return
+     */
     public Iterator<User> listUsers(){
         return users.values().iterator();
     }

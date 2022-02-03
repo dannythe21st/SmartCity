@@ -81,6 +81,8 @@ public class Main {
     private static final String REVIEW_REGISTERED = "Review registered!";
     private static final String SHOP_REGISTERED = "Shop registered!";
     private static final String SHOP_REMOVED = "Shop removed!";
+    private static final String ADMIN = "Admin";
+    private static final String REGULAR = "Regular";
     private static final String UNKNOWN_COMMAND = "Unknown command.";
     private static final String WRONG_INFO = "Incorrect information.";
     private static final String BYE = "See you soon.";
@@ -169,6 +171,7 @@ public class Main {
 
         System.out.print(USER_ID_P);
         String removedID = in.next(); in.nextLine();
+
         try{
             s.removeUser(removerID, removedID);
             System.out.println(USER_REMOVED);
@@ -196,10 +199,8 @@ public class Main {
         try{
             s.addTip(userID, tipID, shopName, address, description);
             System.out.println(TIP_REGISTERED);
-        }catch(UserDoesntExistException e){
+        }catch(UserDoesntExistException | InvalidTypeException e){
             System.out.println(e.getMessage());
-        } catch(InvalidTypeException e){
-            System.out.println(WRONG_INFO);
         }
     }
 
@@ -237,7 +238,18 @@ public class Main {
     }
 
     private static void removeShop(SmartCity s, Scanner in){
+        System.out.println(OWNER_ID_P);
+        String userID = in.next(); in.nextLine();
 
+        System.out.println(SHOP_NAME_P);
+        String shopName = in.nextLine();
+
+        try{
+            s.removeShop(userID, shopName);
+            System.out.println(SHOP_REMOVED);
+        }catch(ShopDoesntExistException | UserDoesntExistException | UserNotTheOwnerException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void rateShop(SmartCity s, Scanner in){
@@ -252,12 +264,15 @@ public class Main {
             System.out.println(REVIEW_REGISTERED);
         }catch(ShopDoesntExistException | InvalidRatingException e){
             System.out.println(e.getMessage());
+        }catch(InputMismatchException e){
+            System.out.println(WRONG_INFO);
         }
     }
 
     private static void getUserInfo(SmartCity s, Scanner in){
         System.out.print(USER_ID_P);
         String userID = in.next(); in.nextLine();
+
         try{
             User u = s.getUserInfo(userID);
             System.out.println(NAME_P + u.getName());
@@ -341,9 +356,9 @@ public class Main {
             User u = it.next();
             int i = u.getType();
             switch (i) {
-                case 1 -> System.out.println(u.getName() + ", " + u.getAge() + ", " + "ADMIN" +
+                case 1 -> System.out.println(u.getName() + ", " + u.getAge() + ", " + ADMIN +
                         ", " + TIP_COUNT_P + u.getNumOfTips() + ", " + LEVEL_P + u.getLevel() + "\n");
-                case 2 -> System.out.println(u.getName() + ", " + u.getAge() + ", " + "REGULAR" +
+                case 2 -> System.out.println(u.getName() + ", " + u.getAge() + ", " + REGULAR +
                         ", " + TIP_COUNT_P + u.getNumOfTips() + ", " + LEVEL_P + u.getLevel() + "\n");
             }
         }
