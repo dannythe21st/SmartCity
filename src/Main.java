@@ -134,6 +134,8 @@ public class Main {
         System.out.println(REMOVE_USER);
         System.out.println(ADD_TIP);
         System.out.println(REMOVE_TIP);
+        System.out.println(ADD_SHOP);
+        System.out.println(REMOVE_SHOP);
         System.out.println(RATE_SHOP);
         System.out.println(USER_INFO);
         System.out.println(SHOP_INFO);
@@ -191,14 +193,11 @@ public class Main {
         System.out.print(SHOP_NAME_P);
         String shopName = in.nextLine();
 
-        System.out.print(ADDRESS_P);
-        String address = in.nextLine();
-
         System.out.print(DESCRIPTION_P);
         String description = in.nextLine();
 
         try{
-            s.addTip(userID, tipID, shopName, address, description);
+            s.addTip(userID, tipID, shopName, description);
             System.out.println(TIP_REGISTERED);
         }catch(UserDoesntExistException | ShopDoesntExistException e){
             System.out.println(e.getMessage());
@@ -221,16 +220,16 @@ public class Main {
     }
 
     private static void addShop(SmartCity s, Scanner in){
-        System.out.println(OWNER_ID_P);
+        System.out.print(OWNER_ID_P);
         String userID = in.next(); in.nextLine();
 
-        System.out.println(PASSWORD_P);
+        System.out.print(PASSWORD_P);
         String password = in.next(); in.nextLine();
 
-        System.out.println(SHOP_NAME_P);
+        System.out.print(SHOP_NAME_P);
         String shopName = in.nextLine();
 
-        System.out.println(ADDRESS_P);
+        System.out.print(ADDRESS_P);
         String address = in.nextLine();
 
         try{
@@ -315,7 +314,7 @@ public class Main {
             while(it.hasNext()){
                 Tip t = it.next();
                 System.out.println(tipNum++ +". " + t.getShop().getName());
-                System.out.println(ADDRESS_P + t.getAddress());
+                System.out.println(ADDRESS_P + t.getShop().getAddress());
                 System.out.println(DESCRIPTION_P + t.getDescription());
             }
         }catch(UserDoesntExistException | UserHasNoTipsException e){
@@ -332,7 +331,7 @@ public class Main {
             while(it.hasNext()){
                 Tip t = it.next();
                 System.out.println(tipNum++ +". " + t.getShop().getName());
-                System.out.println(ADDRESS_P + t.getAddress());
+                System.out.println(ADDRESS_P + t.getShop().getAddress());
                 System.out.println(DESCRIPTION_P + t.getDescription());
             }
         }catch(NoTipsForThatStreetException e){
@@ -350,7 +349,7 @@ public class Main {
             while(it.hasNext()){
                 Tip t = it.next();
                 System.out.println(tipNum++ +". " + t.getShop().getName());
-                System.out.println(ADDRESS_P + t.getAddress());
+                System.out.println(ADDRESS_P + t.getShop().getAddress());
                 System.out.println(DESCRIPTION_P + t.getDescription());
             }
         }catch(NoTipsForThatShopException e){
@@ -378,7 +377,7 @@ public class Main {
         while (it.hasNext()){
             Tip t = it.next();
             System.out.println(tipNum++ +". " + SHOP_NAME_P + t.getShop().getName());
-            System.out.println(ADDRESS_P + t.getAddress());
+            System.out.println(ADDRESS_P + t.getShop().getAddress());
             System.out.println(DESCRIPTION_P + t.getDescription());
         }
     }

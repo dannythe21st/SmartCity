@@ -10,8 +10,6 @@ public interface TipIF {
 
     Establishment getShop();
 
-    String getAddress();
-
     String getDescription();
 
 }

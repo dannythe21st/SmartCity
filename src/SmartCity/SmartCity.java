@@ -69,7 +69,7 @@ public class SmartCity {
      * @param description
      * @throws UserDoesntExistException
      */
-    public void addTip(String userID, String tipID, String shopName, String address, String description)
+    public void addTip(String userID, String tipID, String shopName, String description)
             throws UserDoesntExistException, ShopDoesntExistException {
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
@@ -78,7 +78,7 @@ public class SmartCity {
         else{
             //save tip
             Establishment s = shops.get(shopName);
-            Tip tip = new Tip(userID, tipID, s, address, description);
+            Tip tip = new Tip(userID, tipID, s, description);
             tipsByID.put(tipID, tip);
 
             //update user stats + save tip to user
@@ -108,6 +108,15 @@ public class SmartCity {
             tipsByID.remove(tipID);
     }
 
+    /**
+     * Add a new shop to the city
+     * @param userID
+     * @param shopName
+     * @param address
+     * @param password
+     * @throws UserDoesntExistException
+     * @throws ShopAlreadyExistException
+     */
     public void addShop(String userID, String shopName, String address, String password) throws UserDoesntExistException,
             ShopAlreadyExistException{
         if (!users.containsKey(userID))
@@ -121,6 +130,16 @@ public class SmartCity {
         }
     }
 
+    /**
+     * Remove shop
+     * @param userID
+     * @param shopName
+     * @param password
+     * @throws ShopDoesntExistException
+     * @throws UserDoesntExistException
+     * @throws UserNotTheOwnerException
+     * @throws WrongPasswordException
+     */
     public void removeShop(String userID, String shopName, String password) throws ShopDoesntExistException, UserDoesntExistException,
             UserNotTheOwnerException, WrongPasswordException {
         if (!shops.containsKey(shopName))
@@ -136,6 +155,13 @@ public class SmartCity {
         }
     }
 
+    /**
+     * Adds a rating to a shop
+     * @param shopName
+     * @param rating
+     * @throws ShopDoesntExistException
+     * @throws InvalidRatingException
+     */
     public void rateShop(String shopName, double rating) throws ShopDoesntExistException, InvalidRatingException{
         if (!shops.containsKey(shopName))
             throw new ShopDoesntExistException();
@@ -147,12 +173,24 @@ public class SmartCity {
         }
     }
 
+    /**
+     * Get the info of a user
+     * @param userID
+     * @return
+     * @throws UserDoesntExistException
+     */
     public User getUserInfo(String userID) throws UserDoesntExistException{
         if (!users.containsKey(userID))
             throw new UserDoesntExistException();
         return users.get(userID);
     }
 
+    /**
+     *
+     * @param shopID
+     * @return
+     * @throws ShopDoesntExistException
+     */
     public Establishment getShopInfo(String shopID) throws ShopDoesntExistException{
         if (!shops.containsKey(shopID))
             throw new ShopDoesntExistException();
